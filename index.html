@@ -14,7 +14,6 @@
             margin: 0;
             background-color: #f0f0f0;
             overflow: hidden;
-            transition: background-color 0.3s ease;
         }
 
         .container {
@@ -24,7 +23,6 @@
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .fact-display {
@@ -33,28 +31,12 @@
             overflow-wrap: break-word;
         }
 
-        .fact-button, .toggle-button {
+        .fact-button {
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
             position: absolute;
             transition: transform 0.3s ease;
-        }
-
-        .toggle-button {
-            top: 10px;
-            right: 10px;
-            position: fixed;
-        }
-
-        .dark-mode {
-            background-color: #333;
-            color: #fff;
-        }
-
-        .dark-mode .container {
-            background-color: #444;
-            color: #fff;
         }
     </style>
 </head>
@@ -62,7 +44,6 @@
     <div class="container">
         <div id="fact-display" class="fact-display">Click the button to see a fun fact!</div>
         <button id="fact-button" class="fact-button">Show Fun Fact</button>
-        <button id="toggle-button" class="toggle-button">Toggle Dark Mode</button>
     </div>
     <script>
         const facts = [
@@ -82,11 +63,10 @@
         const maxAttempts = 3;
         const factDisplay = document.getElementById('fact-display');
         const factButton = document.getElementById('fact-button');
-        const toggleButton = document.getElementById('toggle-button');
 
         function moveButtonRandomly() {
-            const maxX = window.innerWidth * 0.8 - factButton.offsetWidth;
-            const maxY = window.innerHeight * 0.8 - factButton.offsetHeight;
+            const maxX = window.innerWidth * 0.6 - factButton.offsetWidth;
+            const maxY = window.innerHeight * 0.6 - factButton.offsetHeight;
             const minX = window.innerWidth * 0.2;
             const minY = window.innerHeight * 0.2;
             const x = Math.random() * (maxX - minX) + minX;
@@ -94,12 +74,18 @@
             factButton.style.transform = `translate(${x}px, ${y}px)`;
         }
 
+        function centerButton() {
+            const centerX = (window.innerWidth - factButton.offsetWidth) / 2;
+            const centerY = (window.innerHeight - factButton.offsetHeight) / 2;
+            factButton.style.transform = `translate(${centerX}px, ${centerY}px)`;
+        }
+
         factButton.addEventListener('mouseover', () => {
             if (attempts < maxAttempts) {
                 moveButtonRandomly();
                 attempts++;
             } else {
-                factButton.style.transform = 'translate(0, 0)';
+                centerButton();
             }
         });
 
@@ -110,11 +96,7 @@
             }
         });
 
-        toggleButton.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-        });
-
-        moveButtonRandomly();
+        centerButton(); // Start with the button centered
     </script>
 </body>
 </html>
