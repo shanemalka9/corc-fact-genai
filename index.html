@@ -65,8 +65,10 @@
         const factButton = document.getElementById('fact-button');
 
         function moveButtonRandomly() {
-            const x = Math.random() * (window.innerWidth - factButton.offsetWidth);
-            const y = Math.random() * (window.innerHeight - factButton.offsetHeight);
+            const maxX = window.innerWidth - factButton.offsetWidth;
+            const maxY = window.innerHeight - factButton.offsetHeight;
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
             factButton.style.transform = `translate(${x}px, ${y}px)`;
         }
 
