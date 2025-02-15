@@ -13,6 +13,7 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
+            overflow: hidden;
         }
 
         .container {
@@ -34,11 +35,8 @@
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
+            position: absolute;
             transition: transform 0.3s ease;
-        }
-
-        .fact-button:hover {
-            transform: translateX(20px);
         }
     </style>
 </head>
@@ -66,15 +64,29 @@
         const factDisplay = document.getElementById('fact-display');
         const factButton = document.getElementById('fact-button');
 
+        function moveButtonRandomly() {
+            const x = Math.random() * (window.innerWidth - factButton.offsetWidth);
+            const y = Math.random() * (window.innerHeight - factButton.offsetHeight);
+            factButton.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        factButton.addEventListener('mouseover', () => {
+            if (attempts < maxAttempts) {
+                moveButtonRandomly();
+                attempts++;
+            } else {
+                factButton.style.transform = 'translate(0, 0)';
+            }
+        });
+
         factButton.addEventListener('click', () => {
             if (attempts >= maxAttempts) {
                 const randomIndex = Math.floor(Math.random() * facts.length);
                 factDisplay.textContent = facts[randomIndex].fact;
-            } else {
-                attempts++;
-                alert(`Try again! Attempts left: ${maxAttempts - attempts}`);
             }
         });
+
+        moveButtonRandomly();
     </script>
 </body>
 </html>
