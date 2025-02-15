@@ -59,8 +59,18 @@
             { "fact": "They are excellent swimmers, using their powerful tails to propel themselves through the water." }
         ];
 
+        let attempts = 0;
+        const maxAttempts = 3;
         const factDisplay = document.getElementById('fact-display');
         const factButton = document.getElementById('fact-button');
+
+        function moveButtonRandomly() {
+            const maxX = window.innerWidth * 0.6 - factButton.offsetWidth;
+            const maxY = window.innerHeight * 0.6 - factButton.offsetHeight;
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            factButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
 
         function centerButton() {
             const centerX = (window.innerWidth - factButton.offsetWidth) / 2;
@@ -68,21 +78,26 @@
             factButton.style.transform = `translate(${centerX}px, ${centerY}px)`;
         }
 
-        function moveButtonSlightly() {
-            const offset = 20; // Move within a small range
-            const x = (Math.random() - 0.5) * offset;
-            const y = (Math.random() - 0.5) * offset;
-            factButton.style.transform += ` translate(${x}px, ${y}px)`;
-        }
-
-        factButton.addEventListener('mouseover', moveButtonSlightly);
-
-        factButton.addEventListener('click', () => {
-            const randomIndex = Math.floor(Math.random() * facts.length);
-            factDisplay.textContent = facts[randomIndex].fact;
+        factButton.addEventListener('mouseover', () => {
+            if (attempts < maxAttempts) {
+                moveButtonRandomly();
+                attempts++;
+            } else {
+                centerButton();
+            }
         });
 
-        centerButton(); // Start with the button centered
+        factButton.addEventListener('click', () => {
+            if (attempts >= maxAttempts) {
+                const randomIndex = Math.floor(Math.random() * facts.length);
+                factDisplay.textContent = facts[randomIndex].fact;
+            } else {
+                alert(`Try again! Attempts left: ${maxAttempts - attempts}`);
+            }
+        });
+
+        // Start with the button centered
+        centerButton();
     </script>
 </body>
 </html>
