@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Facts Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .fact-display {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            overflow-wrap: break-word;
+        }
+
+        .fact-button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .fact-button:hover {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="fact-display" class="fact-display">Click the button to see a fun fact!</div>
+        <button id="fact-button" class="fact-button">Show Fun Fact</button>
+    </div>
+    <script>
+        const facts = [
+            { "fact": "Crocodiles are large aquatic reptiles found in tropical regions of Africa, Asia, the Americas, and Australia." },
+            { "fact": "They are members of the order Crocodylia, which also includes alligators, caimans, and gharials." },
+            { "fact": "Crocodiles have a V-shaped snout, while alligators have a U-shaped snout." },
+            { "fact": "They are carnivorous and have a powerful bite, capable of crushing bones." },
+            { "fact": "Crocodiles can live both in freshwater and saltwater environments." },
+            { "fact": "They have a lifespan of 35 to 75 years, depending on the species." },
+            { "fact": "Crocodiles are known for their stealth and patience, often waiting hours or even days for the perfect moment to attack prey." },
+            { "fact": "They have a four-chambered heart, similar to birds and mammals, which is unique among reptiles." },
+            { "fact": "Crocodiles communicate with each other through vocalizations, such as growls, hisses, and roars." },
+            { "fact": "They are excellent swimmers, using their powerful tails to propel themselves through the water." }
+        ];
+
+        let attempts = 0;
+        const maxAttempts = 3;
+        const factDisplay = document.getElementById('fact-display');
+        const factButton = document.getElementById('fact-button');
+
+        factButton.addEventListener('click', () => {
+            if (attempts >= maxAttempts) {
+                const randomIndex = Math.floor(Math.random() * facts.length);
+                factDisplay.textContent = facts[randomIndex].fact;
+            } else {
+                attempts++;
+                alert(`Try again! Attempts left: ${maxAttempts - attempts}`);
+            }
+        });
+    </script>
+</body>
+</html>
