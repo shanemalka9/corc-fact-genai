@@ -14,6 +14,7 @@
             margin: 0;
             background-color: #f0f0f0;
             overflow: hidden;
+            transition: background-color 0.3s ease;
         }
 
         .container {
@@ -23,6 +24,7 @@
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .fact-display {
@@ -31,12 +33,28 @@
             overflow-wrap: break-word;
         }
 
-        .fact-button {
+        .fact-button, .toggle-button {
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
             position: absolute;
             transition: transform 0.3s ease;
+        }
+
+        .toggle-button {
+            top: 10px;
+            right: 10px;
+            position: fixed;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .container {
+            background-color: #444;
+            color: #fff;
         }
     </style>
 </head>
@@ -44,6 +62,7 @@
     <div class="container">
         <div id="fact-display" class="fact-display">Click the button to see a fun fact!</div>
         <button id="fact-button" class="fact-button">Show Fun Fact</button>
+        <button id="toggle-button" class="toggle-button">Toggle Dark Mode</button>
     </div>
     <script>
         const facts = [
@@ -63,6 +82,7 @@
         const maxAttempts = 3;
         const factDisplay = document.getElementById('fact-display');
         const factButton = document.getElementById('fact-button');
+        const toggleButton = document.getElementById('toggle-button');
 
         function moveButtonRandomly() {
             const maxX = window.innerWidth * 0.8 - factButton.offsetWidth;
@@ -88,6 +108,10 @@
                 const randomIndex = Math.floor(Math.random() * facts.length);
                 factDisplay.textContent = facts[randomIndex].fact;
             }
+        });
+
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
         });
 
         moveButtonRandomly();
